@@ -28,12 +28,17 @@ struct ContentView: View {
                 GeometryReader { geo in                    
                     AnimationBackgroundContainer()
                     Spacer()
-                    Text("San Francisco").foregroundColor(.white)
-                        .fontWeight(.bold)
-                        .font(.largeTitle)
-                        .background(.cyan.opacity(0.25))
-                        .frame(width: geo.size.width, height: geo.size.height / 20)
-                        .cornerRadius(5).padding(EdgeInsets(top: geo.size.height / 10, leading: 0, bottom: 0, trailing: 0))
+                    HStack {
+                        Text("San Francisco").foregroundColor(.white)
+                            .padding()
+                            .fontWeight(.bold)
+                            .font(.largeTitle)
+                            .background(
+                                Rectangle().fill(.cyan.opacity(0.25)).edgesIgnoringSafeArea(.all).cornerRadius(5)
+                            )
+                            .frame(width: geo.size.width, height: geo.size.height / 20)
+                    }.padding([.top])
+                    Sun().padding([.top]).offset(y: 150) //better to not hardcode this but just a test
                     VStack {
                         Spacer()
                         ResultContainerView().cornerRadius(10).frame(width: geo.size.width, height: geo.size.height / 2)

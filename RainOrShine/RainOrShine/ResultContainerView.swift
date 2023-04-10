@@ -22,14 +22,18 @@ struct ResultContainerView : View {
                         ScrollView(.horizontal) {
                             HStack {
                                 ForEach(0..<5) { index in
-                                    Image(systemName: "pencil.circle.fill")
+                                    Spacer()
+                                    Image(systemName: "pencil.circle.fill").resizable().aspectRatio(contentMode: .fit).frame(width: 100, height: 100)
+                                    Spacer()
                                 }
                             }
                         }
                         Spacer()
                         LazyVStack {
                             ForEach(0..<5) { index in
-                                Text("Row \(index)")
+                                Spacer()
+                                Text("Row \(index)").frame(width: 200, height: 100).border(.black, width: 1).cornerRadius(3)
+                                Spacer()
                             }
                         }
                     }
