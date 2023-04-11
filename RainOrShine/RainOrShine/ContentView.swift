@@ -39,6 +39,7 @@ struct ContentView: View {
                             .frame(width: geo.size.width, height: geo.size.height / 20)
                     }.padding([.top])
                     Sun().padding([.top]).offset(y: 150) //better to not hardcode this but just a test
+                    Cloud().frame(width: geo.size.width / 2, height: geo.size.height / 2)
                     VStack {
                         Spacer()
                         ResultContainerView().cornerRadius(10).frame(width: geo.size.width, height: geo.size.height / 2)
