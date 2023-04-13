@@ -20,7 +20,8 @@ struct Cloud : View {
                         let randomWidth : CGFloat = .random(in: (width / 4)...(width / 2))
                         let randomY : CGFloat = .random(in: 0...geo.size.height - randomWidth)
                         let randomX : CGFloat = .random(in: 0...width - randomWidth)
-                        Circle().fill(gradient).frame(width: randomWidth, height: randomWidth).offset(x: randomX, y: randomY)
+                        let randomOpacity : CGFloat = .random(in: 0...1)
+                        Circle().fill(gradient).frame(width: randomWidth, height: randomWidth).offset(x: randomX, y: randomY).opacity(randomOpacity)
                     }
                 }
             }

@@ -61,7 +61,6 @@ struct RainDrops: View {
             withAnimation(.linear(duration: 5).delay(.random(in: 0...2)).repeatForever(autoreverses: false)) {
                 startAnimation = true
             }
-            
         }
         
         //autoconnect = Automates the process of connecting or disconnecting from this connectable publisher.

@@ -12,10 +12,14 @@ import SwiftUI
 struct ResultContainerView : View {
     
     //@Binding var cityName : String
+    @State private var scrollPosition : CGFloat = 0
+    @State private var hScrollHeight : CGFloat = 120
     
     var body: some View {
         VStack {
             GeometryReader { geo in
+                let width = geo.size.width
+                let height = geo.size.height
                 ScrollView(.vertical) {
                     VStack {
                         Spacer()
@@ -23,11 +27,11 @@ struct ResultContainerView : View {
                             HStack {
                                 ForEach(0..<5) { index in
                                     Spacer()
-                                    Image(systemName: "pencil.circle.fill").resizable().aspectRatio(contentMode: .fit).frame(width: 100, height: 100)
+                                    Image(systemName: "pencil.circle.fill").resizable().aspectRatio(contentMode: .fit).frame(width: 100, height: 100).opacity(0.75)
                                     Spacer()
                                 }
                             }
-                        }
+                        }.frame(width: width - 20, height: hScrollHeight).opacity(0.9)
                         Spacer()
                         LazyVStack {
                             ForEach(0..<5) { index in
@@ -38,7 +42,6 @@ struct ResultContainerView : View {
                         }
                     }
                 }
-                
             }
         }.background(.cyan.opacity(0.25))
         
@@ -47,3 +50,8 @@ struct ResultContainerView : View {
         //)
     }
 }
+
+
+//Insanely enough, there is no built in way to track scroll position and perform updates, so try something like this?
+
+//https://www.swiftbysundell.com/articles/observing-swiftui-scrollview-content-offset/
