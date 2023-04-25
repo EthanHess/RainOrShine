@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		270E4C4D29CA3727006D8E19 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E4C4C29CA3727006D8E19 /* Constants.swift */; };
 		2796233529E48FBE00718D2F /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2796233429E48FBE00718D2F /* Cloud.swift */; };
+		27C686DC29F8613B00992779 /* CloudContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C686DB29F8613B00992779 /* CloudContainer.swift */; };
+		27C686E029F86A7300992779 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C686DF29F86A7300992779 /* LocationManager.swift */; };
 		27CCECF129CCD12300F05BE8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CCECF029CCD12300F05BE8 /* Extensions.swift */; };
 		27FDF3B629C1147E00716FB7 /* RainOrShineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FDF3B529C1147E00716FB7 /* RainOrShineApp.swift */; };
 		27FDF3B829C1147E00716FB7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FDF3B729C1147E00716FB7 /* ContentView.swift */; };
@@ -46,6 +48,8 @@
 /* Begin PBXFileReference section */
 		270E4C4C29CA3727006D8E19 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2796233429E48FBE00718D2F /* Cloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cloud.swift; sourceTree = "<group>"; };
+		27C686DB29F8613B00992779 /* CloudContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudContainer.swift; sourceTree = "<group>"; };
+		27C686DF29F86A7300992779 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		27CCECF029CCD12300F05BE8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		27FDF3B229C1147E00716FB7 /* RainOrShine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RainOrShine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27FDF3B529C1147E00716FB7 /* RainOrShineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainOrShineApp.swift; sourceTree = "<group>"; };
@@ -119,11 +123,13 @@
 				27FDF3DF29C11B6400716FB7 /* ResultContainerView.swift */,
 				27FDF3E129C11B7800716FB7 /* AnimationBackgroundContainer.swift */,
 				27FDF3E329C11BF100716FB7 /* NetworkController.swift */,
+				27C686DF29F86A7300992779 /* LocationManager.swift */,
 				27CCECF029CCD12300F05BE8 /* Extensions.swift */,
 				27FDF3E529C11EC100716FB7 /* ViewModel.swift */,
 				27FDF3E729C11ECC00716FB7 /* WeatherResult.swift */,
 				27FDF3E929C125CA00716FB7 /* RainDrop.swift */,
 				2796233429E48FBE00718D2F /* Cloud.swift */,
+				27C686DB29F8613B00992779 /* CloudContainer.swift */,
 				27FDF3EB29C125D300716FB7 /* Sun.swift */,
 				270E4C4C29CA3727006D8E19 /* Constants.swift */,
 				27FDF3B929C1148000716FB7 /* Assets.xcassets */,
@@ -297,7 +303,9 @@
 				27FDF3E829C11ECC00716FB7 /* WeatherResult.swift in Sources */,
 				27FDF3E629C11EC100716FB7 /* ViewModel.swift in Sources */,
 				27FDF3B629C1147E00716FB7 /* RainOrShineApp.swift in Sources */,
+				27C686E029F86A7300992779 /* LocationManager.swift in Sources */,
 				27CCECF129CCD12300F05BE8 /* Extensions.swift in Sources */,
+				27C686DC29F8613B00992779 /* CloudContainer.swift in Sources */,
 				27FDF3EC29C125D300716FB7 /* Sun.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,6 +468,7 @@
 				DEVELOPMENT_TEAM = 63ARTNG4RQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app would like to use your location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -489,6 +498,7 @@
 				DEVELOPMENT_TEAM = 63ARTNG4RQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app would like to use your location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

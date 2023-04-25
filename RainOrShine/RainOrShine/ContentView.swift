@@ -7,6 +7,9 @@
 
 import SwiftUI
 import Combine
+import CoreLocation
+
+//import CoreLocationUI <- If we want location button (which we don't)
 
 //Initially intended for earth weather but NASA's APIs are interesting
 
@@ -21,6 +24,7 @@ struct ContentView: View {
     //@ObservableObject is the name of the protocol they both conform to
     
     @StateObject var networkController = NetworkController()
+    @StateObject var locationManager = LocationManager()
     
     var body: some View {
         VStack {
@@ -38,6 +42,7 @@ struct ContentView: View {
                             )
                             .frame(width: geo.size.width, height: geo.size.height / 20)
                     }.padding([.top])
+                    //CloudContainer().frame(width: geo.size.width / 2, height: geo.size.height / 2)
                     Sun().padding([.top]).offset(y: 150) //better to not hardcode this but just a test
                     Cloud().frame(width: geo.size.width / 2, height: geo.size.height / 2)
                     VStack {
@@ -47,21 +52,44 @@ struct ContentView: View {
                 }
             }
         }.onAppear(perform: {
-            //NOTE: This could cause retain cycle since dependency is a class
-            networkController.fetchDataWithResult { result in
-                switch result {
-                    case .success(let data):
-                        handleData(data)
-                    case .failure(let error):
-                        handleError(error)
-                    case .none:
-                        print(".none")
-                    }
+            //Will want to be able to refresh this but for now just a test
+            if let location = locationManager.location {
+                
+                print("Cur location \(location)")
+            } else {
+                //MARK: NOTE: This could cause retain cycle since dependency is a class, ideally don't use closures in SwiftUI structs (value types)
+                
+                //locationManager.requestLocation()
+//                networkController.fetchOpenWeatherDataWithLocation(37, lon: -122) { result in
+//                    switch result {
+//                        case .success(let data):
+//                            handleData(data)
+//                        case .failure(let error):
+//                            handleError(error)
+//                        case .none:
+//                            print(".none")
+//                    }
+//                }
+                
+                Task {
+                    await asyncAwaitOW()
+                }
             }
-            
-            Task {
-                await asyncAwait()
-            }
+    
+//            networkController.fetchDataWithResult { result in
+//                switch result {
+//                    case .success(let data):
+//                        handleData(data)
+//                    case .failure(let error):
+//                        handleError(error)
+//                    case .none:
+//                        print(".none")
+//                }
+//            }
+//
+//            Task {
+//                await asyncAwait()
+//            }
             
             //returnAnyPublisher()
         })
@@ -70,16 +98,26 @@ struct ContentView: View {
     
     func handleData(_ data: Data) {
         print("Data RES \(data)")
+        print("Data RES JSON \(data.toJSONDictionary() ?? "Nada")")
     }
     
     func handleError(_ error: Error) {
         print("Error RES \(error)")
     }
     
-    func asyncAwait() async {
+    func asyncAwaitNASA() async {
         do {
-            let someData = try await networkController.fetchDataAsyncAwait()
-            print("AA Data \(someData?.toJSONDictionary())")
+            let someData = try await networkController.fetchDataAsyncAwaitNASA()
+            print("AA Data NASA \(someData?.toJSONDictionary() ?? "Nada")")
+        } catch let error {
+            print("AA ERR \(error)")
+        }
+    }
+    
+    func asyncAwaitOW() async {
+        do {
+            let someData = try await networkController.fetchDataAsyncAwaitOW(37, lon: -122)
+            print("AA Data OW \(someData?.toJSONDictionary() ?? "Nada")")
         } catch let error {
             print("AA ERR \(error)")
         }
