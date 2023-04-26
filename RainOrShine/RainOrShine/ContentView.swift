@@ -33,7 +33,8 @@ struct ContentView: View {
                     AnimationBackgroundContainer()
                     Spacer()
                     HStack {
-                        Text("San Francisco").foregroundColor(.white)
+                        let cityName = networkController.weatherData?.name ?? "San Francisco"
+                        Text(cityName).foregroundColor(.white)
                             .padding()
                             .fontWeight(.bold)
                             .font(.largeTitle)
@@ -71,9 +72,11 @@ struct ContentView: View {
 //                    }
 //                }
                 
-                Task {
-                    await asyncAwaitOW()
-                }
+                networkController.fetchDataAndPublish()
+                
+                // Task {
+                    // await asyncAwaitOW()
+                // }
             }
     
 //            networkController.fetchDataWithResult { result in
@@ -92,6 +95,12 @@ struct ContentView: View {
 //            }
             
             //returnAnyPublisher()
+        }).onChange(of: networkController.weatherData, perform: { newValue in
+            guard let newVal = newValue else {
+                print("No change \(#function)")
+                return
+            }
+            print("On Change Weather Data \(newVal)")
         })
         .padding()
     }

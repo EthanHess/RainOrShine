@@ -14,7 +14,7 @@ class NetworkController : ObservableObject {
     let baseURL = "https://api.nasa.gov/insight_weather/?api_key=\(NASA_API_KEY)&feedtype=json&ver=1.0"
     
     @Published var data : Data?
-    //@Published var data : WeatherResult
+    @Published var weatherData : WeatherResult?
     
     //MARK: --- NASA STUFF ---
     
@@ -36,8 +36,31 @@ class NetworkController : ObservableObject {
 //
 //    }
     
+    //MARK: Codable (Encodable & Decodable) then publish to observers
     func fetchDataAndPublish() {
-        
+        //TODO pass from LocationManager
+        let lat : Double = 37
+        let lon : Double = -122
+        let interpolatedURLString = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(OPEN_WEATHER_API_KEY)"
+        guard let url = urlFromStringWrapper(interpolatedURLString) else { return }
+        let request = URLRequest(url: url)
+        let dataTask = URLSession.shared.dataTask(with: request) { data, _, error in
+            if error != nil { print("Error in \(#function)") }
+            if let theData = data {
+                do {
+                    let weather = try JSONDecoder().decode(WeatherResult.self, from: theData)
+                    print("WeatherResult \(weather)")
+                    //Publishing changes from background threads is not allowed; make sure to publish values from the main thread (via operators like receive(on:)) on model updates.
+                    DispatchQueue.main.async {
+                        self.weatherData = weather
+                    }
+                } catch let JSONError {
+                    print("--- JSON Error --- \(JSONError)")
+                    return
+                }
+            }
+        }
+        dataTask.resume()
     }
     
     func fetchDataAsyncAwaitNASA() async throws -> Data? {
@@ -60,6 +83,7 @@ class NetworkController : ObservableObject {
     
     typealias OWResult = Result<Data, Error>?
     
+    //CLLocationDegress is a Double
     func fetchOpenWeatherDataWithLocation(_ lat: CLLocationDegrees, lon: CLLocationDegrees, completion: @escaping(_ result: OWResult) -> Void) {
         let interpolatedURLString = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(OPEN_WEATHER_API_KEY)"
         guard let url = urlFromStringWrapper(interpolatedURLString) else {
