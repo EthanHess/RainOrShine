@@ -36,7 +36,7 @@ class NetworkController : ObservableObject {
 //
 //    }
     
-    //MARK: Codable (Encodable & Decodable) then publish to observers
+    //MARK: Codable (Encodable & Decodable) then publish to subscribers
     func fetchDataAndPublish() {
         //TODO pass from LocationManager
         let lat : Double = 37

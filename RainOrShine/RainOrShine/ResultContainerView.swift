@@ -22,29 +22,34 @@ struct ResultContainerView : View {
             GeometryReader { geo in
                 let width = geo.size.width
                 let height = geo.size.height
+                let hScrollHeightBuffer = hScrollHeight > 0 ? hScrollHeight : 0 //won't go negative
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(0..<5) { index in
+                            let dimension = (hScrollHeight - 20) > 0 ? hScrollHeight - 20 : 0
+                            Spacer()
+                            Image(systemName: "pencil.circle.fill").resizable().aspectRatio(contentMode: .fit).frame(width: dimension, height: dimension).opacity(0.75)
+                            Spacer()
+                        }
+                    }
+                }.frame(width: width - 20, height: hScrollHeightBuffer).opacity(0.9)
                 OffsetObservingScrollView(offset: $scrollOffset) {
                     VStack {
-                        Spacer()
-                        ScrollView(.horizontal) {
-                            HStack {
-                                ForEach(0..<5) { index in
-//                                    Spacer()
-                                    let dimension = hScrollHeight - 20
-                                    Image(systemName: "pencil.circle.fill").resizable().aspectRatio(contentMode: .fit).frame(width: dimension, height: dimension).opacity(0.75)
-                                    Spacer()
-                                }
-                            }
-                        }.frame(width: width - 20, height: hScrollHeight).opacity(0.9)
-                        Spacer()
                         LazyVStack {
                             ForEach(0..<5) { index in
                                 Spacer()
-                                Text("Row \(index)").frame(width: 200, height: 100).border(.black, width: 1).cornerRadius(3)
+                                Text("Row \(index)").frame(width: width - 100, height: 100).padding().background(
+                                    LinearGradient(
+                                        colors: [.blue, .white],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    ).opacity(0.6)
+                                ).clipShape(Capsule())
                                 Spacer()
                             }
                         }
                     }
-                }
+                }.offset(y: hScrollHeightBuffer)
             }
         }.background(.cyan.opacity(0.25)).onChange(of: scrollOffset) { val in
             hScrollHeight = 120 - val.y
